@@ -4,12 +4,13 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         crypto: {
-          dark: "#0f172a",  // Темный фон
-          primary: "#3b82f6", // Синий (для акцентов)
+          dark: "#0f172a",  // dark bg
+          primary: "#3b82f6", // blue
         },
       },
     },

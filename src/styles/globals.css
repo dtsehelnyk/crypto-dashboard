@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #0f172a;
+  --background: #f4f4f4; /* crypto-dark */
+}
+
+.dark {
+  --foreground: #f8fafc;
+  --background: #0f172a; /* crypto-dark */
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  transition: color 0.3s, background-color 0.3s;
+}
+
+a, button {
+  transition: color 0.2s, background-color 0.2s;
+}

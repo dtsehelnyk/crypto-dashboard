@@ -1,8 +1,5 @@
+import { redirect } from 'next/navigation';
+
 export default function Home() {
-  return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold">Crypto Dashboard</h1>
-      <p>Coming soon...</p>
-    </main>
-  );
+  redirect('/coins'); // redirect from root page to /coins
 }
