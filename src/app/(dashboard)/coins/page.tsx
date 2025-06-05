@@ -1,11 +1,10 @@
-import { CoinTable } from "@/components/CoinTable/CoinTable";
+import CoinsTable from "@/components/CoinsTable";
+import { fetchCoins } from "@/lib/api/coingeko";
 
-export default function Home() {
-  return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold">Crypto Dashboard</h1>
-      {/* <CoinTable /> */}
-      <p>Coming soon...</p>
-    </main>
-  );
+export default async function CoinsPage() {
+  const coins = await fetchCoins();
+  console.log(coins);
+  
+
+  return <CoinsTable coins={coins} />;
 }
