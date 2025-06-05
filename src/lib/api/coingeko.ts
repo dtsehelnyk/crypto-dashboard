@@ -1,4 +1,3 @@
-// src/lib/api/coingecko.ts
 import { ICoin } from '@/types/coin';
 import { fetchWithRetry } from '../fetchWithRetry';
 import { ApiError, NetworkError } from '@/types/api';
