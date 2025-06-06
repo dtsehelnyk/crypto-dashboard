@@ -6,7 +6,6 @@ import { BASE_URL } from '@/constants/api';
 export const fetchCoins = async (currency = 'usd'): Promise<ICoin[]> => {
   try {
     const url = new URL(BASE_URL);
-
     url.searchParams.set('vs_currency', currency);
     url.searchParams.set('order', 'market_cap_desc');
     url.searchParams.set('per_page', '50');

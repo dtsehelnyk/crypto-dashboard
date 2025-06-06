@@ -2,22 +2,53 @@
 
 import { formatCurrency, formatPercentage } from '@/lib/utils';
 import { ICoin } from '@/types/coin';
+import TableHeader, { Column, SortConfig } from './TableHeader';
+import { useState } from 'react';
+import Search from '../ui/Search';
+
+const columns: Column[] = [
+  { key: '№', label: '№', sortable: false },
+  { key: 'name', label: 'Coin', sortable: true },
+  { key: 'current_price', label: 'Price', sortable: true },
+  { key: 'price_change_percentage_24h', label: '24h %', sortable: true },
+  { key: 'market_cap', label: 'Market Cap', sortable: true },
+  { key: 'actions', label: '', sortable: false }
+];
 
 export default function CoinsTable({ coins }: { coins: ICoin[] }) {
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
+    key: 'market_cap',
+    direction: 'asc',
+  });
+
+  const sortedCoins = [...coins].sort((a, b) => {
+    const aValue = a[sortConfig.key as keyof ICoin];
+    const bValue = b[sortConfig.key as keyof ICoin];
+
+    if (aValue > bValue) return sortConfig.direction === 'desc' ? 1 : -1;
+    if (aValue < bValue) return sortConfig.direction === 'desc' ? -1 : 1;
+    return 0;
+  })
+
+   const handleSort = (key: string): void => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+  
   return (
     <div className="overflow-x-auto">
+      {/* <Search onSearch={} /> */}
       <table className="w-full">
-        <thead className="border-b border-border">
-          <tr>
-            <th className="text-left p-4">#</th>
-            <th className="text-left p-4">Coin</th>
-            <th className="text-right p-4">Price</th>
-            <th className="text-right p-4">24h</th>
-            <th className="text-right p-4">Market Cap</th>
-          </tr>
-        </thead>
+        <TableHeader
+          columns={columns}
+          sortConfig={sortConfig}
+          onSort={handleSort}
+        />
         <tbody>
-          {coins.map(({
+          {sortedCoins.map(({
             id,
             name,
             image,
