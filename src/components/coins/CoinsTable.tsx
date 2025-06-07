@@ -21,26 +21,34 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
     direction: 'asc',
   });
 
-  const sortedCoins = [...coins].sort((a, b) => {
+  console.log('____________', coins);
+
+  const sortedCoins = coins && [...coins].sort((a, b) => {
     const aValue = a[sortConfig.key as keyof ICoin];
     const bValue = b[sortConfig.key as keyof ICoin];
 
     if (aValue > bValue) return sortConfig.direction === 'desc' ? 1 : -1;
     if (aValue < bValue) return sortConfig.direction === 'desc' ? -1 : 1;
+
     return 0;
   })
 
-   const handleSort = (key: string): void => {
+  const handleSort = (key: string): void => {
     let direction: 'asc' | 'desc' = 'asc';
+    
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
       direction = 'desc';
     }
+
     setSortConfig({ key, direction });
   };
+
+  const handleSearch = (name: string): ICoin | undefined => {
+    return coins.find(el => el.name === name);
+  }
   
   return (
     <div className="overflow-x-auto">
-      {/* <Search onSearch={} /> */}
       <table className="w-full">
         <TableHeader
           columns={columns}
@@ -48,7 +56,7 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
           onSort={handleSort}
         />
         <tbody>
-          {sortedCoins.map(({
+          {sortedCoins?.map(({
             id,
             name,
             image,
