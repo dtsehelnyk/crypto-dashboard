@@ -7,7 +7,7 @@ type CoinSearchProps = {
   onSearch: (searchName: string) => void,
 }
 
-export function CoinSearch({ onSearch }: CoinSearchProps) {
+const CoinSearch: React.FC<CoinSearchProps> = ({ onSearch }) => {
   const [searchName, setSearchName] = useState('');
 
   // debounce
@@ -28,3 +28,5 @@ export function CoinSearch({ onSearch }: CoinSearchProps) {
     />
   );
 }
+
+export default CoinSearch;

@@ -2,8 +2,10 @@ import { ICoin } from '@/types/coin';
 import { fetchWithRetry } from '../fetchWithRetry';
 import { ApiError, NetworkError } from '@/types/api';
 import { BASE_URL } from '@/constants/api';
+import { Currency } from '@/types/currency';
 
-export const fetchCoins = async (currency = 'usd'): Promise<ICoin[]> => {
+export const fetchCoins = async (currency = 'eur'): Promise<ICoin[]> => {
+  
   try {
     const url = new URL(BASE_URL);
     url.searchParams.set('vs_currency', currency);
@@ -11,6 +13,8 @@ export const fetchCoins = async (currency = 'usd'): Promise<ICoin[]> => {
     url.searchParams.set('per_page', '50');
     url.searchParams.set('page', '1');
     url.searchParams.set('sparkline', 'false');
+
+    console.log('____url', url);
 
     const res = await fetch(url);
     
@@ -33,4 +37,4 @@ export const fetchCoins = async (currency = 'usd'): Promise<ICoin[]> => {
   }
 };
 
-export const fetchCoinsSafe = () => fetchWithRetry(fetchCoins);
+export const fetchCoinsSafe = (currency: Currency) => fetchWithRetry(() => fetchCoins(currency));

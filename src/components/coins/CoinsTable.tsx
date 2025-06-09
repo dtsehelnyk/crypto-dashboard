@@ -4,7 +4,7 @@ import { formatCurrency, formatPercentage } from '@/lib/utils';
 import { ICoin } from '@/types/coin';
 import TableHeader, { Column, SortConfig } from './TableHeader';
 import { useState } from 'react';
-import Search from '../ui/Search';
+import { Currency } from '@/types/currency';
 
 const columns: Column[] = [
   { key: '№', label: '№', sortable: false },
@@ -15,13 +15,11 @@ const columns: Column[] = [
   { key: 'actions', label: '', sortable: false }
 ];
 
-export default function CoinsTable({ coins }: { coins: ICoin[] }) {
+export const CoinsTable: React.FC<{coins: ICoin[]}> = ({ coins }) => {
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: 'market_cap',
     direction: 'asc',
   });
-
-  console.log('____________', coins);
 
   const sortedCoins = coins && [...coins].sort((a, b) => {
     const aValue = a[sortConfig.key as keyof ICoin];
@@ -31,7 +29,7 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
     if (aValue < bValue) return sortConfig.direction === 'desc' ? -1 : 1;
 
     return 0;
-  })
+  });
 
   const handleSort = (key: string): void => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -42,10 +40,6 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
 
     setSortConfig({ key, direction });
   };
-
-  const handleSearch = (name: string): ICoin | undefined => {
-    return coins.find(el => el.name === name);
-  }
   
   return (
     <div className="overflow-x-auto">
@@ -73,7 +67,10 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
                 <span className="text-muted-foreground">{symbol.toUpperCase()}</span>
               </td>
               <td className="text-right p-4 font-medium">
-                {formatCurrency(current_price)}
+                {formatCurrency(
+                  current_price,
+                  localStorage.getItem('currency') as Currency || 'usd'
+                )}
               </td>
               <td className={`text-right p-4 ${
                 price_change_percentage_24h >= 0 
@@ -83,7 +80,10 @@ export default function CoinsTable({ coins }: { coins: ICoin[] }) {
                 {formatPercentage(price_change_percentage_24h)}
               </td>
               <td className="text-right p-4">
-                {formatCurrency(market_cap)}
+                {formatCurrency(
+                  market_cap,
+                  localStorage.getItem('currency') as Currency || 'usd'
+                )}
               </td>
             </tr>
           ))}

@@ -1,19 +1,26 @@
 import { create } from 'zustand';
 import { ICoin } from '../types/coin';
 import { fetchCoinsSafe } from '../lib/api/coingeko';
+import { Currency } from '@/types/currency';
 
 interface CryptoStore {
-  coins: ICoin[];
-  loading: boolean;
-  fetchCoins: () => Promise<void>;
+  coins: ICoin[],
+  currency: Currency,
+  isLoading: boolean,
+  fetchCoins: (currency: Currency) => Promise<void>,
+  changeCurrency: (currency: Currency) => void,
 }
 
 export const useCryptoStore = create<CryptoStore>((set) => ({
   coins: [],
-  loading: false,
-  fetchCoins: async () => {
-    set({ loading: true });
-    const data = await fetchCoinsSafe();
-    set({ coins: data, loading: false });
+  isLoading: false,
+  currency: 'usd',
+  fetchCoins: async (currency: Currency) => {
+    set({ isLoading: true });
+    const data = await fetchCoinsSafe(currency);
+    set({ coins: data, isLoading: false });
   },
+  changeCurrency: (currency: Currency) => {
+    set({ currency });
+  }
 }));
