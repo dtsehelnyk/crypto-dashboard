@@ -6,13 +6,13 @@ interface SearchProps extends Omit<InputProps, 'onChange'>  {
   debounceDelay?: number;
 } 
 
-const Search = ({
+const Search: React.FC<SearchProps> = ({
   value: externalValue,
   onChange,
   debounceDelay = 300,
   className,
   ...props
-}: SearchProps) => {
+}) => {
   const [internalValue, setInternalValue] = useState(externalValue || '');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

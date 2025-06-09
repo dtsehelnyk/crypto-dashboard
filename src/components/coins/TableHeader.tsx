@@ -19,11 +19,11 @@ type TableHeaderProps = {
   onSort: (key: string) => void,
 }
 
-export default function TableHeader({
+const TableHeader: React.FC<TableHeaderProps> = ({
   columns,
   sortConfig,
   onSort,
-}: TableHeaderProps) {
+}) => {
 
   return (
     <thead className="border-b border-border">
@@ -52,5 +52,7 @@ export default function TableHeader({
         ))}
       </tr>
     </thead>
-  )
+  );
 }
+
+export default TableHeader;

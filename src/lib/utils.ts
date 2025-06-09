@@ -1,7 +1,9 @@
-export const formatCurrency = (value: number): string => {
+import { Currency } from "@/types/currency";
+
+export const formatCurrency = (value: number, currency: Currency): string => {
   return new Intl.NumberFormat('eu-US', {
     style: 'currency',
-    currency: 'USD',
+    currency,
     minimumFractionDigits: 2,
     maximumFractionDigits: 6,
   }).format(value);

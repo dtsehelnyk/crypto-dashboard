@@ -3,6 +3,7 @@
 import React from "react";
 import Logo from "./ui/Logo";
 import { ThemeToggle } from "./ui/ThemeToggler";
+import { CurrencySelector } from "./CurrencySelector";
 
 const Header: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
           <a href="/coins" className="hover:text-blue-400">Coins</a>
           <a href="#" className="hover:text-blue-400">Portfolio</a>
         </nav>
+        <CurrencySelector />
         <ThemeToggle />
       </div>
     </header>
