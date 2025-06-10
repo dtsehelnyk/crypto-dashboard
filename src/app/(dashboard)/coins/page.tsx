@@ -28,7 +28,6 @@ const CoinsPage = () => {
     );
     
     setFilteredCoins(filtered);
-    console.log('__________', coins);
 
   }, [coins]);
 
